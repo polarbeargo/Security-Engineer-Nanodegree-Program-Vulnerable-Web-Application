@@ -1,0 +1,55 @@
+Scan results:
+>> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
+   Location: SampleCode/create_customer.py:23
+22	        self.email = email
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+
+--------------------------------------------------
+>> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
+   Location: SampleCode/create_customer.py:24
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+25	
+
+--------------------------------------------------
+>> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
+   Location: SampleCode/fix_customer_orders.py:11
+10	def customerOrdersXML():
+11	    root = lxml.etree.fromstring(xmlString)
+12	    root = fromstring(xmlString)
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mysecurepassword'
+   Location: SampleCode/init_db.py:14
+13	    def open(self):
+14	        self.conn = psycopg2.connect(user = "webappuser",
+15	                                    password = "mysecurepassword",
+16	                                    host = "localhost",
+17	                                    port = "5432",
+18	                                    database = "website")
+19	        self.cursor = self.conn.cursor()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Location: SampleCode/init_db.py:40
+39	        letters = string.ascii_lowercase
+40	        result_str = ''.join(random.choice(letters) for i in range(length))
+41	        return result_str
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
+   Location: SampleCode/onLogin.py:1
+1	import os, sys, subprocess
+2	
+3	class userLogin():
+4	    def __init__(self):
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Location: SampleCode/onLogin.py:8
+7	    def process(self, user, startupcmd):
+8	        p = subprocess.Popen([startupcmd], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+9	        r = p.communicate()[0]
+
+--------------------------------------------------
