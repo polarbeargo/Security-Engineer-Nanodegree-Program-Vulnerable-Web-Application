@@ -1,7 +1,7 @@
 Scan results:
 >> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
 OSWASP: A02:2021 – Cryptographic Failures
-Severity: Medium Confidence:
+Severity: Medium Confidence: High
 Location: SampleCode/create_customer.py:23
 22	        self.email = email
 23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
@@ -11,7 +11,7 @@ Recommendation: MD5 should never be used in passwords, we need to migrate to bcr
 https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 --------------------------------------------------
 >> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
-OSWASP: A05:2021 – Security Misconfiguration
+OSWASP: A03:2021 – Injection
 Severity:       Confidence:
 Location: SampleCode/create_customer.py:24
 23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
@@ -19,20 +19,18 @@ Location: SampleCode/create_customer.py:24
 25	
 
 Recommendation:
-
-
+https://bandit.readthedocs.io/en/1.7.0/plugins/b703_django_mark_safe.html
 --------------------------------------------------
 >> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
 OSWASP: A05:2021 – Security Misconfiguration
-Severity:        Confidence:
-
+Severity: Medium        Confidence: Medium
 Location: SampleCode/fix_customer_orders.py:11
 10	def customerOrdersXML():
 11	    root = lxml.etree.fromstring(xmlString)
 12	    root = fromstring(xmlString)
 
-Recommendation:
-
+Recommendation: The majority of this is based on Christian Heimes' defusedxml work, which may be found at: https://pypi.python.org/pypi/defusedxml/#defusedxml-sax
+It is well known that using different XLM methods to parse untrusted XML input leaves one open to XML assaults. The defusedxml equivalents of methods should be used in their place.
 --------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mysecurepassword'
 OSWASP: A05:2021 – Security Misconfiguration
@@ -47,43 +45,41 @@ Location: SampleCode/init_db.py:14
 19	        self.cursor = self.conn.cursor()
 
 Recommendation: We should never use default passwords. 
-https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
+https://bandit.readthedocs.io/en/1.7.0/plugins/b106_hardcoded_password_funcarg.html
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-OSWASP: FALSEPOSITIVE
+OSWASP: FALSEPOSITIVE  Confidence: High
 Severity: FALSEPOSITIVE
 Location: SampleCode/init_db.py:40
 39	        letters = string.ascii_lowercase
 40	        result_str = ''.join(random.choice(letters) for i in range(length))
 41	        return result_str
 
-Recommendation: This is a false positive, the code is generate a random reset code
-
-
+Recommendation: This is a false positive, the code is generate a random resetcode.
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
-OSWASP: A05:2021 – Security Misconfiguration
-Severity:    Confidence:
+OSWASP: 
+Severity: Low   Confidence: High
 Location: SampleCode/onLogin.py:1
 1	import os, sys, subprocess
 2	
 3	class userLogin():
 4	    def __init__(self):
 
-
-Recommendation:
-
-
+Recommendation: Consider possible security implications associated with these modules.
+https://docs.openstack.org/bandit/1.4.0/blacklists/blacklist_imports.html#b404-import-subprocess
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-OSWASP: A05:2021 – Security Misconfiguration
-Severity:         Confidence:
+OSWASP: FALSEPOSITIVE
+Severity: FALSEPOSITIVE  Confidence: High
 Location: SampleCode/onLogin.py:8
 7	    def process(self, user, startupcmd):
 8	        p = subprocess.Popen([startupcmd], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 9	        r = p.communicate()[0]
 
-Recommendation:
-
-
+Recommendation: 
+This plugin test is part of a family of tests built to check for process spawning and warn appropriately.
+Specifically, this test looks for the spawning of a subprocess without the use of a command shell. 
+This type of subprocess invocation is not vulnerable to shell injection attacks, but care should still be taken to ensure validity of input.
+https://docs.openstack.org/bandit/1.4.0/plugins/subprocess_without_shell_equals_true.html
 --------------------------------------------------
