@@ -1,0 +1,190 @@
+Run started:2023-09-14 06:35:19.262272
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'dkjdfgasi342098fdakj324hgrf098123i4jklafd09234kj'
+   Severity: Low   Confidence: Medium
+   Location: VulnWebApp/Site/.ipynb_checkpoints/__init__-checkpoint.py:24:15
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b105_hardcoded_password_string.html
+23	    app.config.from_object(Config)
+24	    app.config['SECRET_KEY'] = 'dkjdfgasi342098fdakj324hgrf098123i4jklafd09234kj'
+25	    
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/.ipynb_checkpoints/__init__-checkpoint.py:49:26
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+48	            c = Conn_postgres()
+49	            data = c.exec("SELECT id, role, firstname, lastname, username FROM users WHERE id = '" + General.cleanvar(str(user_id)) + "'")
+50	            c.close()
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'dkjdfgasi342098fdakj324hgrf098123i4jklafd09234kj'
+   Severity: Low   Confidence: Medium
+   Location: VulnWebApp/Site/__init__.py:24:15
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b105_hardcoded_password_string.html
+23	    app.config.from_object(Config)
+24	    app.config['SECRET_KEY'] = 'dkjdfgasi342098fdakj324hgrf098123i4jklafd09234kj'
+25	    
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/__init__.py:49:26
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+48	            c = Conn_postgres()
+49	            data = c.exec("SELECT id, role, firstname, lastname, username FROM users WHERE id = '" + General.cleanvar(str(user_id)) + "'")
+50	            c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/customers/views.py:31:22
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+30	        c = Conn_postgres()
+31	        data = c.exec("SELECT * FROM customers WHERE id = '" + id + "';")
+32	        c.close()
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'weakpasswordrule'
+   Severity: Low   Confidence: Medium
+   Location: VulnWebApp/Site/db/.ipynb_checkpoints/__init__-checkpoint.py:14:20
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b106_hardcoded_password_funcarg.html
+13	    def open(self):
+14	        self.conn = psycopg2.connect(user = "vulnwebsiteuser",
+15	                                    password = "weakpasswordrule",
+16	                                    host = "localhost",
+17	                                    port = "5432",
+18	                                    database = "vulnwebsite")
+19	        self.cursor = self.conn.cursor()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   Location: VulnWebApp/Site/db/.ipynb_checkpoints/__init__-checkpoint.py:43:29
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b311-random
+42	        letters = string.ascii_lowercase
+43	        result_str = ''.join(random.choice(letters) for i in range(length))
+44	        return result_str
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   Location: VulnWebApp/Site/db/.ipynb_checkpoints/__init__-checkpoint.py:51:28
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+50	        self.createTable('users', 'CREATE TABLE users (id SERIAL PRIMARY KEY, role TEXT NOT NULL, firstname TEXT, lastname TEXT, username TEXT NOT NULL, password TEXT NOT NULL);')
+51	        self.cursor.execute("INSERT INTO users (role, firstname, lastname, username, password) VALUES ('admin','Super','User','administrator','" + self.randPassword(16) + "');")
+52	        self.cursor.execute("INSERT INTO users (role, firstname, lastname, username, password) VALUES ('user','John','Doe','guest','orange');")
+
+--------------------------------------------------
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'weakpasswordrule'
+   Severity: Low   Confidence: Medium
+   Location: VulnWebApp/Site/db/__init__.py:14:20
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b106_hardcoded_password_funcarg.html
+13	    def open(self):
+14	        self.conn = psycopg2.connect(user = "vulnwebsiteuser",
+15	                                    password = "weakpasswordrule",
+16	                                    host = "localhost",
+17	                                    port = "5432",
+18	                                    database = "vulnwebsite")
+19	        self.cursor = self.conn.cursor()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   Location: VulnWebApp/Site/db/__init__.py:43:29
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html#b311-random
+42	        letters = string.ascii_lowercase
+43	        result_str = ''.join(random.choice(letters) for i in range(length))
+44	        return result_str
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   Location: VulnWebApp/Site/db/__init__.py:51:28
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+50	        self.createTable('users', 'CREATE TABLE users (id SERIAL PRIMARY KEY, role TEXT NOT NULL, firstname TEXT, lastname TEXT, username TEXT NOT NULL, password TEXT NOT NULL);')
+51	        self.cursor.execute("INSERT INTO users (role, firstname, lastname, username, password) VALUES ('admin','Super','User','administrator','" + self.randPassword(16) + "');")
+52	        self.cursor.execute("INSERT INTO users (role, firstname, lastname, username, password) VALUES ('user','John','Doe','guest','orange');")
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/home/.ipynb_checkpoints/views-checkpoint.py:29:18
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+28	    c = Conn_postgres()
+29	    data = c.exec("SELECT id, role, firstname, lastname, username FROM users WHERE username = '" + General.cleanvar(username) + "' AND password = '" + General.cleanvar(password) + "'")
+30	    c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/home/views.py:29:18
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+28	    c = Conn_postgres()
+29	    data = c.exec("SELECT id, role, firstname, lastname, username FROM users WHERE username = '" + General.cleanvar(username) + "' AND password = '" + General.cleanvar(password) + "'")
+30	    c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/profile/views.py:23:18
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+22	    c = Conn_postgres()
+23	    data = c.exec("SELECT id, username FROM users WHERE id != '" + userid + "'")
+24	    c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/profile/views.py:35:10
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+34	    c = Conn_postgres()
+35	    sql = "UPDATE users SET firstname = '{0}', lastname = '{1}' WHERE id = '{2}';".format(General.cleanvar(firstname), General.cleanvar(lastname), user_id)
+36	    c.insert(sql)
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/profile/views.py:55:-1
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+54	            or from_id != '{0}'
+55	    """.format(General.cleanvar(userid)))
+56	    c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/profile/views.py:66:13
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+65	    c = Conn_postgres()
+66	    c.insert("INSERT INTO messages (to_id, from_id, body) VALUES (" + General.cleanvar(str(to)) + "," + str(id) +",'" + General.cleanvar(message) + "');")
+67	    c.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   Location: VulnWebApp/Site/users/views.py:34:22
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b608_hardcoded_sql_expressions.html
+33	        c = Conn_postgres()
+34	        data = c.exec("SELECT id, firstname, lastname, username FROM users WHERE id = '" + str(id) + "';")
+35	        c.close()
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 552
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0.0
+		Low: 6.0
+		Medium: 12.0
+		High: 0.0
+	Total issues (by confidence):
+		Undefined: 0.0
+		Low: 10.0
+		Medium: 6.0
+		High: 2.0
+Files skipped (0):
