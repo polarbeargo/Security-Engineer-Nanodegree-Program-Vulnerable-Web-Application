@@ -13,6 +13,8 @@
 [image12]: ./images/SQLi2.png
 [image13]: ./images/Sensitive.png
 [image14]: ./images/hash.png
+[image15]: ./images/onlinehashcracker.png
+[image16]: ./images/SQLiResult.png
 ### Install bandit:
 ```
  # Using virtualenv
@@ -78,7 +80,7 @@ Before      |  Edit cookie & refresh browser
 ### We can retrieve the user information by modifying customers/id/1   
 
 - After we manipulated the Cookie gain admin rights.
-- Heading to Customers page hit view button..  
+- Heading to Customers page hit view button.  
 - Hit xhr type file go to Resonse tab then open new window.
 ![][image7] 
 - You can see by modifying customers/id/2 we can direct retrieve the user information.
@@ -96,10 +98,23 @@ Same as the Users page:
 - Hit xhr type file go to Resonse tab then the passwords will be exposed. This is considered a security breach  
 
 ![][image13]  
-- Copy paste the hash use hashid.py to find out the hash type is MD5  
-
+- Copy paste the hash use hashid.py to find out the hash type is MD5 
+ 
 ![][image14]
-### We can SQLi the customer page with or 1='1  
+- Use online hashcracker: https://hashes.com/en/decrypt/hash to crack the password.
+![][image15]
+### We can SQLi the customer page with' or 1='1  
+
+- After we manipulated the Cookie gain admin rights.
+- Heading to Customers page hit view button.
+- Hit xhr type file go to Resonse tab then open new window.  
+
+![][image13]
+- We can SQLi customers page by insert' or 1 = '1 at the end of  /customers/id/1 to retrieve full customers information.
+```
+' or 1 = '1
+```
+![][image16]
 
 ### There is a XSS vulnerability in the profile section  
 
