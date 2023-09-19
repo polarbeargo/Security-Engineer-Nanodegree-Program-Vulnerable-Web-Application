@@ -15,6 +15,8 @@
 [image14]: ./images/hash.png
 [image15]: ./images/onlinehashcracker.png
 [image16]: ./images/SQLiResult.png
+[image17]: ./images/XSS.png
+[image18]: ./images/XSS1.png  
 ### Install bandit:
 ```
  # Using virtualenv
@@ -118,4 +120,10 @@ Same as the Users page:
 
 ### There is a XSS vulnerability in the profile section  
 
-### If we put a breakpoint in the getCustomer function, we can see the hashes of the customers
+- Go to the XSS Section
+- Next I check to see if Direct Chat was exploitable to XSS  
+- Using the following XSS I was able to inject a javascript alert in Direct Chat  
+ `“<script>alert(1)</script>”.`
+
+![][image17]  
+![][image18] 
