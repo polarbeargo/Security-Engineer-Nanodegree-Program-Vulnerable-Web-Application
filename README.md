@@ -37,7 +37,7 @@ pip install bandit
 [bandit Scan Results](/RESULT-FILE-NAME.txt)
 
 ### Security Report: 
-[VWA Project Report](/VWA-Project-Template.docx)  
+[VWA Project Report](/VWA-Project-Template.pdf)  
 
 ### Use the bruteforce.py tool for brute force attacks:
 
