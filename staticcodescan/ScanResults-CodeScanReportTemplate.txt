@@ -1,4 +1,15 @@
 Scan results:
+>> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
+OSWASP: A03:2021 – Injection
+Severity: High Confidence: High
+Location: SampleCode/create_customer.py:24
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+25	
+
+Recommendation:
+https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
+--------------------------------------------------
 >> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
 OSWASP: A02:2021 – Cryptographic Failures
 Severity: Medium Confidence: High
@@ -10,20 +21,9 @@ Location: SampleCode/create_customer.py:23
 Recommendation: MD5 should never be used in passwords, we need to migrate to bcrypt or another hash that is slow hashing.
 https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 --------------------------------------------------
->> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
-OSWASP: A03:2021 – Injection
-Severity: Medium  Confidence: High
-Location: SampleCode/create_customer.py:24
-23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
-24	        self.banner = safestring.mark_safe(banner)
-25	
-
-Recommendation:
-https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
---------------------------------------------------
 >> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
 OSWASP: A06:2021 - Vulnerable and Outdated Components
-Severity: Medium        Confidence: Medium
+Severity: High        Confidence: Medium
 Location: SampleCode/fix_customer_orders.py:11
 10	def customerOrdersXML():
 11	    root = lxml.etree.fromstring(xmlString)
@@ -49,8 +49,8 @@ Recommendation: We should never use default passwords.
 https://bandit.readthedocs.io/en/1.7.0/plugins/b106_hardcoded_password_funcarg.html
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-OSWASP: A5:2021 - Security Misconfiguration
-Severity: LOW  Confidence: High
+OSWASP: FALSEPOSITIVE
+Severity: FALSEPOSITIVE  Confidence: High
 Location: SampleCode/onLogin.py:8
 7	    def process(self, user, startupcmd):
 8	        p = subprocess.Popen([startupcmd], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -61,16 +61,6 @@ This plugin test is part of a family of tests built to check for process spawnin
 Specifically, this test looks for the spawning of a subprocess without the use of a command shell. 
 This type of subprocess invocation is not vulnerable to shell injection attacks, but care should still be taken to ensure validity of input.
 https://docs.openstack.org/bandit/1.4.0/plugins/subprocess_without_shell_equals_true.html
---------------------------------------------------
->> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
-OSWASP: FALSEPOSITIVE  Confidence: High
-Severity: FALSEPOSITIVE
-Location: SampleCode/init_db.py:40
-39	        letters = string.ascii_lowercase
-40	        result_str = ''.join(random.choice(letters) for i in range(length))
-41	        return result_str
-
-Recommendation: This is a false positive, the code is generate a random resetcode.
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
 OSWASP: FALSEPOSITIVE
@@ -83,4 +73,14 @@ Location: SampleCode/onLogin.py:1
 
 Recommendation: Consider possible security implications associated with these modules.
 https://docs.openstack.org/bandit/1.4.0/blacklists/blacklist_imports.html#b404-import-subprocess
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+OSWASP: FALSEPOSITIVE  Confidence: High
+Severity: FALSEPOSITIVE
+Location: SampleCode/init_db.py:40
+39	        letters = string.ascii_lowercase
+40	        result_str = ''.join(random.choice(letters) for i in range(length))
+41	        return result_str
+
+Recommendation: This is a false positive, the code is generate a random resetcode.
 --------------------------------------------------
