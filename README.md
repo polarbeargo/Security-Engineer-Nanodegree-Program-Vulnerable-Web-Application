@@ -34,10 +34,12 @@ pip install bandit
  bandit -r VulnWebApp -o RESULT-FILE-NAME.txt -f txt
  ```
  
-[bandit Scan Results](/RESULT-FILE-NAME.txt)
-
+[bandit Scan Results](/RESULT-FILE-NAME.txt)  
 ### Security Report: 
 [VWA Project Report](/VWA-Project-Template.pdf)  
+
+### Code Scan Report  
+[CodeScanReport.txt](/staticcodescan/ScanResults-CodeScanReportTemplate.txt)  
 
 ### Use the bruteforce.py tool for brute force attacks:
 
@@ -120,10 +122,10 @@ Same as the Users page:
 
 ### There is a XSS vulnerability in the profile section  
 
-- Go to the XSS Section
-- Next I check to see if Direct Chat was exploitable to XSS  
-- Using the following XSS I was able to inject a javascript alert in Direct Chat  
- `“<script>alert(1)</script>”.`
+- Go to the profile section.
+- Next I check to see if direct chat was exploitable to XSS.  
+- Using the following XSS I was able to inject a javascript alert in direct chat  
+ `“<script>alert(1)</script>”`
 
 ![][image17]  
 ![][image18] 
