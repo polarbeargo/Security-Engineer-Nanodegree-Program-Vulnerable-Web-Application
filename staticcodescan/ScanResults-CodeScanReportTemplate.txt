@@ -1,41 +1,7 @@
 Scan results:
->> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
-OSWASP: A03:2021 – Injection
-Severity: High Confidence: High
-Location: SampleCode/create_customer.py:24
-23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
-24	        self.banner = safestring.mark_safe(banner)
-25	
-
-Recommendation:
-https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
---------------------------------------------------
->> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
-OSWASP: A02:2021 – Cryptographic Failures
-Severity: Medium Confidence: High
-Location: SampleCode/create_customer.py:23
-22	        self.email = email
-23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
-24	        self.banner = safestring.mark_safe(banner)
-
-Recommendation: MD5 should never be used in passwords, we need to migrate to bcrypt or another hash that is slow hashing.
-https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
---------------------------------------------------
->> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
-OSWASP: A04:2021 – Insecure Design
-Severity: Medium        Confidence: Medium
-Location: SampleCode/fix_customer_orders.py:11
-10	def customerOrdersXML():
-11	    root = lxml.etree.fromstring(xmlString)
-12	    root = fromstring(xmlString)
-
-Recommendation: The majority of this is based on Christian Heimes' defusedxml work, which may be found at: https://pypi.python.org/pypi/defusedxml/#defusedxml-sax
-It is well known that using different XLM methods to parse untrusted XML input leaves one open to XML assaults. The defusedxml equivalents of methods should be used in their place.
-https://docs.openstack.org/developer/bandit/api/bandit.blacklists.html#b313-b320-xml
---------------------------------------------------
 >> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mysecurepassword'
 OSWASP: A05:2021 – Security Misconfiguration
-Severity: Medium Confidence: Medium
+Severity: Critical Confidence: Medium
 Location: SampleCode/init_db.py:14
 13	    def open(self):
 14	        self.conn = psycopg2.connect(user = "webappuser",
@@ -47,6 +13,40 @@ Location: SampleCode/init_db.py:14
 
 Recommendation: We should never use default passwords. 
 https://bandit.readthedocs.io/en/1.7.0/plugins/b106_hardcoded_password_funcarg.html
+--------------------------------------------------
+>> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
+OSWASP: A03:2021 – Injection
+Severity: High Confidence: High
+Location: SampleCode/create_customer.py:24
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+25	
+
+Recommendation:
+https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
+--------------------------------------------------
+>> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
+OSWASP: A05:2021 – Security Misconfiguration
+Severity: High        Confidence: Medium
+Location: SampleCode/fix_customer_orders.py:11
+10	def customerOrdersXML():
+11	    root = lxml.etree.fromstring(xmlString)
+12	    root = fromstring(xmlString)
+
+Recommendation: The majority of this is based on Christian Heimes' defusedxml work, which may be found at: https://pypi.python.org/pypi/defusedxml/#defusedxml-sax
+It is well known that using different XLM methods to parse untrusted XML input leaves one open to XML assaults. The defusedxml equivalents of methods should be used in their place.
+https://docs.openstack.org/developer/bandit/api/bandit.blacklists.html#b313-b320-xml
+--------------------------------------------------
+>> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
+OSWASP: A02:2021 – Cryptographic Failures
+Severity: Medium Confidence: High
+Location: SampleCode/create_customer.py:23
+22	        self.email = email
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+
+Recommendation: MD5 should never be used in passwords, we need to migrate to bcrypt or another hash that is slow hashing.
+https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
 OSWASP: A04:2021 – Insecure Design
