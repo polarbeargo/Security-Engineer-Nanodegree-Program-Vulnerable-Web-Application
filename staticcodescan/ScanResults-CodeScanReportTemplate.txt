@@ -14,17 +14,6 @@ Location: SampleCode/init_db.py:14
 Recommendation: We should never use default passwords. 
 https://bandit.readthedocs.io/en/1.7.0/plugins/b106_hardcoded_password_funcarg.html
 --------------------------------------------------
->> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
-OSWASP: A03:2021 – Injection
-Severity: High Confidence: High
-Location: SampleCode/create_customer.py:24
-23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
-24	        self.banner = safestring.mark_safe(banner)
-25	
-
-Recommendation:
-https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
---------------------------------------------------
 >> Issue: [B320:blacklist] Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.
 OSWASP: A05:2021 – Security Misconfiguration
 Severity: High        Confidence: Medium
@@ -37,20 +26,20 @@ Recommendation: The majority of this is based on Christian Heimes' defusedxml wo
 It is well known that using different XLM methods to parse untrusted XML input leaves one open to XML assaults. The defusedxml equivalents of methods should be used in their place.
 https://docs.openstack.org/developer/bandit/api/bandit.blacklists.html#b313-b320-xml
 --------------------------------------------------
->> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
-OSWASP: A02:2021 – Cryptographic Failures
-Severity: Medium Confidence: High
-Location: SampleCode/create_customer.py:23
-22	        self.email = email
+>> Issue: [B703:django_mark_safe] Potential XSS on mark_safe function.
+OSWASP: A03:2021 – Injection
+Severity: High Confidence: High
+Location: SampleCode/create_customer.py:24
 23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
 24	        self.banner = safestring.mark_safe(banner)
+25	
 
-Recommendation: MD5 should never be used in passwords, we need to migrate to bcrypt or another hash that is slow hashing.
-https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+Recommendation:
+https://bandit.readthedocs.io/en/latest/plugins/b703_django_mark_safe.html
 --------------------------------------------------
 >> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
-OSWASP: A04:2021 – Insecure Design
-Severity: Medium  Confidence: High
+OSWASP: A06:2021-Vulnerable and Outdated Components
+Severity: High  Confidence: High
 Location: SampleCode/onLogin.py:8
 7	    def process(self, user, startupcmd):
 8	        p = subprocess.Popen([startupcmd], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -61,18 +50,28 @@ This plugin test is part of a family of tests built to check for process spawnin
 Specifically, this test looks for the spawning of a subprocess without the use of a command shell. 
 This type of subprocess invocation is not vulnerable to shell injection attacks, but care should still be taken to ensure validity of input.
 https://docs.openstack.org/bandit/1.4.0/plugins/subprocess_without_shell_equals_true.html
---------------------------------------------------
->> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
-OSWASP: FALSEPOSITIVE
-Severity: FALSEPOSITIVE   Confidence: High
-Location: SampleCode/onLogin.py:1
-1	import os, sys, subprocess
-2	
-3	class userLogin():
-4	    def __init__(self):
+        * Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
+            OSWASP: FALSEPOSITIVE
+            Severity: FALSEPOSITIVE   Confidence: High
+            Location: SampleCode/onLogin.py:1
+            1	import os, sys, subprocess
+            2	
+            3	class userLogin():
+            4	    def __init__(self):
 
-Recommendation: Consider possible security implications associated with these modules.
-https://docs.openstack.org/bandit/1.4.0/blacklists/blacklist_imports.html#b404-import-subprocess
+            Recommendation: Consider possible security implications associated with these modules.
+            https://docs.openstack.org/bandit/1.4.0/blacklists/blacklist_imports.html#b404-import-subprocess
+--------------------------------------------------
+>> Issue: [B303:blacklist] Use of insecure MD2, MD4, MD5, or SHA1 hash function.
+OSWASP: A02:2021 – Cryptographic Failures
+Severity: Medium Confidence: High
+Location: SampleCode/create_customer.py:23
+22	        self.email = email
+23	        self.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+24	        self.banner = safestring.mark_safe(banner)
+
+Recommendation: MD5 should never be used in passwords, we need to migrate to bcrypt or another hash that is slow hashing.
+https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
 OSWASP: FALSEPOSITIVE  Confidence: High
